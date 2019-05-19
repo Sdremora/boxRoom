@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>boxRoom</title>
+</head>
+
+<body>
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" href="/itemsList" >Товары</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/ordersList">Заказы</a>
+    </li>
+</ul>
+
+<table class="table table-hover">
+    <thead>
+    <tr class="table-primary">
+        <th scope="col">Article</th>
+        <th scope="col">Name</th>
+        <th scope="col">Shelf</th>
+        <th scope="col">Box</th>
+        <th scope="col">Amount</th>
+        <th scope="col"> </th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="item : ${items}">
+        <tr>
+            <td th:text ="${item.getArticle()}">...</td>
+            <td th:text ="${item.getName()}">...</td>
+            <td th:text ="${item.getShelf()}">...</td>
+            <td th:text ="${item.getBox()}">...</td>
+            <td th:text ="${item.getAmount()}">...</td>
+            <td><a th:href="@{item/delete(article=${item.getArticle()})}" class="badge badge-dark">delete</a></td>
+        </tr>
+    </th:block>
+    <tr class="table-success">
+        <form action="#" th:action="@{/itemsList}" th:object="${item}" method="post">
+            <td><input type="text" th:field="*{article}"></td>
+            <td><input type="text" th:field="*{name}">
+            <td><input type="text" th:field="*{shelf}"></td>
+            <td><input type="text" th:field="*{box}"></td>
+            <td><input type="text" th:field="*{amount}"></td>
+            <td><button type="submit" class="btn btn-outline-success btn-sm">Add Item</button></td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+</body>
+</html>
